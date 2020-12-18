@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="currency_formatter" type="mix">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/_build/dev/lib/currency_formatter/ebin" />
+      <root url="file://$PROJECT_DIR$/_build/test/lib/currency_formatter/ebin" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/deps/currency_formatter/lib" />
+    </SOURCES>
+  </library>
+</component>
