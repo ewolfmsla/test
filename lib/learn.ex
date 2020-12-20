@@ -160,8 +160,9 @@ defmodule Learn do
 
     Logger.debug("len [1, 2, 3, 4, 5, 3, 2] = #{inspect(Length.calc([1, 2, 3, 4, 5, 3, 2]))}")
 
-    to_do_list = ToDoList.new() |>
-      ToDoList.add("mon", "get out of bed")
+    to_do_list =
+      ToDoList.new()
+      |> ToDoList.add("mon", "get out of bed")
       |> ToDoList.add("mon", "drink coffee!!")
       |> ToDoList.add("mon", "learn elixir")
 
@@ -172,7 +173,7 @@ defmodule Learn do
     to_do_list = ToDoList.add(to_do_list, "mon", "take a break from learning")
 
     mon_tasks = ToDoList.tasks_for(to_do_list, "mon")
-#    mon_tasks = ToDoList.add(mon_tasks, "mon", "eat!")
+    #    mon_tasks = ToDoList.add(mon_tasks, "mon", "eat!")
     Logger.debug("monday tasks: #{inspect(mon_tasks)}")
 
     to_dos = ToDoList.new()
@@ -183,16 +184,69 @@ defmodule Learn do
     ParamTest.try({:ok, "worked"})
     ParamTest.try({:error, "worked"})
     ParamTest.try({:foo, "worked"})
-    {:ok, "great"} |> ParamTest.try
+    {:ok, "great"} |> ParamTest.try()
 
-#    ["eric", "sally"] |>
-#    Stream.with_index |>
-#    Enum.each(fn {name, idx} -> IO.puts("#{idx + 1}. #{name}") end)
+    #    ["eric", "sally"] |>
+    #    Stream.with_index |>
+    #    Enum.each(fn {name, idx} -> IO.puts("#{idx + 1}. #{name}") end)
 
-    st = ["eric", "sally"] |>
-      Stream.with_index |>
-      Enum.reduce("", fn {name, idx}, a ->  a <> "#{idx + 1}. #{name}\n" end)
+    st =
+      ["eric", "sally"]
+      |> Stream.with_index()
+      |> Enum.reduce("", fn {name, idx}, a -> a <> "#{idx + 1}. #{name}\n" end)
 
     IO.puts(st)
+  end
+
+  def run4() do
+    eric = %Person{first: "Eric", last: "Wolf"}
+    eric = %{eric | age: 61}
+    IO.puts(inspect(eric))
+    IO.puts("first: #{eric.last}")
+
+    todos = ToDoList2.new()
+
+    todos =
+      ToDoList2.add_entry(todos, %{:weekday => "monday", :task => "drink coffee"})
+      |> ToDoList2.add_entry(%{:weekday => "monday", :task => "learn more elixir"})
+      |> ToDoList2.add_entry(%{:weekday => "tuesday", :task => "get up and do it again"})
+
+    IO.puts(inspect(todos))
+    entries = ToDoList2.entries(todos, "monday")
+    IO.puts(inspect(entries))
+
+    todos =
+      ToDoList2.new()
+      |> ToDoList2.add_entry(%{:weekday => "mon", :task => "drink coffee"})
+      |> ToDoList2.add_entry(%{:weekday => "tue", :task => "read book"})
+      |> ToDoList2.add_entry(%{:weekday => "mon", :task => "eat breakfast"})
+
+#    todos = ToDoList2.update_task(todos, 2, "drink lots of coffee")
+#    todos = ToDoList2.update_task(todos, 3, "drink even more coffee")
+
+    IO.puts("-----")
+    IO.puts(inspect(todos))
+    IO.puts("-----")
+
+    x =
+      %{1 => "a", 2 => "b"}
+      |> Stream.filter(fn {key, _} -> key == 2 end)
+      |> Enum.map(fn {_, val} -> val end)
+
+    IO.puts(inspect(x))
+
+    IO.puts("-----x-----")
+    todos =
+      ToDoList2.new()
+      |> ToDoList2.add_entry(%{:weekday => "mon", :task => "drink coffee"})
+      |> ToDoList2.add_entry(%{:weekday => "tue", :task => "read book"})
+      |> ToDoList2.add_entry(%{:weekday => "mon", :task => "eat breakfast"})
+
+    todos = ToDoList2.update_task(todos, 2, "read elixir book")
+    IO.puts(inspect(todos))
+  end
+
+  def run5() do
+    IO.puts("hello there, enrique! how's it going?")
   end
 end

@@ -90,4 +90,52 @@ defmodule HelloTest do
 
     assert generated === expected
   end
+
+  test "struct" do
+    person = %Person{first: "Foo", last: "Bar"}
+    person = %{person | age: 24}
+    assert person.age === 24
+    assert person.__struct__ === Person
+  end
+
+  test "todo list 2" do
+    todos =
+      ToDoList2.new()
+      |> ToDoList2.add_entry(%{:weekday => "mon", :task => "drink coffee"})
+      |> ToDoList2.add_entry(%{:weekday => "tue", :task => "read book"})
+      |> ToDoList2.add_entry(%{:weekday => "mon", :task => "eat breakfast"})
+
+    assert ToDoList2.entries(todos, "mon") == ["drink coffee", "eat breakfast"]
+    assert ToDoList2.get_entry_by_id(todos, 2) == "read book"
+    assert ToDoList2.get_entry_by_id(todos, 5) == "unknown"
+  end
+
+  test "todo list 2 update" do
+    todos =
+      ToDoList2.new()
+      |> ToDoList2.add_entry(%{:weekday => "mon", :task => "drink coffee"})
+      |> ToDoList2.add_entry(%{:weekday => "tue", :task => "read book"})
+      |> ToDoList2.add_entry(%{:weekday => "mon", :task => "eat breakfast"})
+
+    todos = ToDoList2.update_task(todos, 2, "read elixir book")
+    todos = ToDoList2.update_task(todos, 1, "drink some coffee")
+
+    todos = ToDoList2.update_task(todos, 5, "key doesn't exit, don't alter to do list")
+
+    assert ToDoList2.get_entry_by_id(todos, 2) == "read elixir book"
+    assert ToDoList2.get_entry_by_id(todos, 1) == "drink some coffee"
+  end
+
+  test "todo list 2 update2" do
+    todos =
+      ToDoList2.new()
+      |> ToDoList2.add_entry(%{:weekday => "mon", :task => "drink coffee"})
+      |> ToDoList2.add_entry(%{:weekday => "tue", :task => "read book"})
+      |> ToDoList2.add_entry(%{:weekday => "mon", :task => "eat breakfast"})
+
+    todos = ToDoList2.update_task2(todos, 2, "read elixir book")
+
+    assert ToDoList2.get_entry_by_id(todos, 2) === "read elixir book"
+    assert ToDoList2.get_entry_by_id(todos, 1) === "drink coffee"
+  end
 end
